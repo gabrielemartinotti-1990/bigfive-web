@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { saveTest } from '@/actions';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { TestLanguageSwitch } from './test-language-switch';
+import { ConsentGate } from "./consent-gate";
 
 const questionLanguages = getInfo().languages;
 
@@ -29,14 +30,16 @@ export default function TestPage({
           language={language}
         />
       </div>
-      <Survey
-        questions={questions}
-        nextText={t('next')}
-        prevText={t('back')}
-        resultsText={t('seeResults')}
-        saveTest={saveTest}
-        language={language}
-      />
+      <ConsentGate>
+  <Survey
+    questions={questions}
+    nextText={t("next")}
+    prevText={t("back")}
+    resultsText={t("seeResults")}
+    saveTest={saveTest}
+    language={language}
+  />
+</ConsentGate>
     </>
   );
 }
